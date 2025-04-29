@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lens & Light | Fotografia Profissional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #6b4d3f;
+            --secondary: #e8d5c8;
+            --accent: #c89f7f;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1493863641943-9b68992a8d07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1958&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 90vh;
+        }
+        
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        
+        .testimonial-card {
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a4033;
+            transform: translateY(-2px);
+        }
+        
+        .text-primary {
+            color: var(--primary);
+        }
+        
+        .bg-primary {
+            background-color: var(--primary);
+        }
+        
+        .bg-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .border-accent {
+            border-color: var(--accent);
+        }
+        
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar.scrolled .nav-link {
+            color: #333;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full z-50 py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white navbar.scrolled:text-gray-800">
+                <span class="text-primary">Lens</span> & Light
+            </a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-white navbar.scrolled:text-gray-800">Início</a>
+                <a href="#about" class="nav-link text-white navbar.scrolled:text-gray-800">Sobre</a>
+                <a href="#portfolio" class="nav-link text-white navbar.scrolled:text-gray-800">Portfólio</a>
+                <a href="#services" class="nav-link text-white navbar.scrolled:text-gray-800">Serviços</a>
+                <a href="#contact" class="nav-link text-white navbar.scrolled:text-gray-800">Contato</a>
+            </div>
+            
+            <button class="md:hidden text-white navbar.scrolled:text-gray-800" id="menu-toggle">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white w-full mt-4 py-4 rounded-lg shadow-lg" id="mobile-menu">
+            <div class="flex flex-col space-y-4 px-4">
+                <a href="#home" class="nav-link text-gray-800">Início</a>
+                <a href="#about" class="nav-link text-gray-800">Sobre</a>
+                <a href="#portfolio" class="nav-link text-gray-800">Portfólio</a>
+                <a href="#services" class="nav-link text-gray-800">Serviços</a>
+                <a href="#contact" class="nav-link text-gray-800">Contato</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero flex items-center justify-center text-center text-white relative" id="home">
+        <div class="container mx-auto px-6 animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Capturando Momentos, Criando Memórias</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Fotografia profissional que conta histórias através de imagens</p>
+            <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full font-medium text-lg">Agende sua sessão</a>
+        </div>
+        
+        <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl text-white"></i>
+        </a>
+    </section>
+    
+    <!-- About Section -->
+    <section class="py-20 bg-secondary" id="about">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                         alt="Fotógrafa" 
+                         class="rounded-lg shadow-xl w-full max-w-md mx-auto">
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary">Sobre Mim</h2>
+                    <p class="text-lg mb-6">Olá, eu sou a Ana! Sou uma fotógrafa profissional apaixonada por capturar momentos especiais e transformá-los em memórias eternas.</p>
+                    <p class="text-lg mb-6">Com mais de 10 anos de experiência, minha abordagem combina técnica refinada com um olhar artístico único. Acredito que cada pessoa, cada casal, cada família tem uma história única para contar, e é minha missão capturar essa essência em cada clique.</p>
+                    <p class="text-lg mb-8">Minha filosofia é simples: criar imagens autênticas que resistam ao teste do tempo, imagens que você vai amar hoje e daqui a 20 anos.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-white px-6 py-4 rounded-lg shadow-md text-center">
+                            <i class="fas fa-camera text-3xl mb-2 text-primary"></i>
+                            <p class="font-bold">+500 Sessões</p>
+                        </div>
+                        <div class="bg-white px-6 py-4 rounded-lg shadow-md text-center">
+                            <i class="fas fa-award text-3xl mb-2 text-primary"></i>
+                            <p class="font-bold">15 Prêmios</p>
+                        </div>
+                        <div class="bg-white px-6 py-4 rounded-lg shadow-md text-center">
+                            <i class="fas fa-globe text-3xl mb-2 text-primary"></i>
+                            <p class="font-bold">5 Países</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Section -->
+    <section class="py-20" id="portfolio">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">Meu Portfólio</h2>
+                <p class="text-lg max-w-2xl mx-auto">Explore algumas das minhas fotografias favoritas. Cada imagem conta uma história única.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Retrato" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Retratos</h3>
+                            <p>Capturando a essência de cada indivíduo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 2 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Casamento" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Casamentos</h3>
+                            <p>O dia mais especial da sua vida</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 3 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" 
+                         alt="Família" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Famílias</h3>
+                            <p>Memórias para toda a vida</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 4 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Ensaios" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Ensaios</h3>
+                            <p>Expressão pessoal e estilo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 5 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Eventos" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Eventos</h3>
+                            <p>Capturando a energia e emoção</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Item 6 -->
+                <div class="gallery-item rounded-lg overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                         alt="Moda" 
+                         class="w-full h-64 md:h-80 object-cover">
+                    <div class="overlay">
+                        <div class="text-white text-center p-4">
+                            <h3 class="text-xl font-bold mb-2">Moda</h3>
+                            <p>Estilo e elegância em cada detalhe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="btn-primary inline-block px-8 py-3 rounded-full font-medium text-lg">Ver Portfólio Completo</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="py-20 bg-primary text-white" id="services">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Meus Serviços</h2>
+                <p class="text-lg max-w-2xl mx-auto">Ofereço uma variedade de serviços fotográficos para atender às suas necessidades.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white text-gray-800 rounded-lg p-8 shadow-xl">
+                    <div class="text-4xl mb-4 text-primary">
+                        <i class="fas fa-ring"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Casamentos</h3>
+                    <p class="mb-4">Cobertura completa do seu grande dia, desde os preparativos até a festa, capturando cada momento especial e emocionante.</p>
+                    <ul class="mb-6 space-y-2">
+                        <li><i class="fas fa-check text-primary mr-2"></i> Sessão pré-casamento</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> Cobertura completa do evento</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> Álbum de luxo incluso</li>
+                    </ul>
+                    <p class="font-bold text-xl">A partir de R$ 3.500</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="bg-white text-gray-800 rounded-lg p-8 shadow-xl">
+                    <div class="text-4xl mb-4 text-primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Famílias</h3>
+                    <p class="mb-4">Sessões descontraídas que capturam o amor e a conexão da sua família, criando memórias para serem apreciadas por gerações.</p>
+                    <ul class="mb-6 space-y-2">
+                        <li><i class="fas fa-check text-primary mr-2"></i> 1 hora de sessão</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> Até 5 pessoas</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> 20 fotos editadas</li>
+                    </ul>
+                    <p class="font-bold text-xl">A partir de R$ 800</p>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="bg-white text-gray-800 rounded-lg p-8 shadow-xl">
+                    <div class="text-4xl mb-4 text-primary">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Retratos Profissionais</h3>
+                    <p class="mb-4">Sessões individuais que destacam sua personalidade e estilo, perfeitas para redes sociais, sites profissionais ou presentes.</p>
+                    <ul class="mb-6 space-y-2">
+                        <li><i class="fas fa-check text-primary mr-2"></i> 30 minutos de sessão</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> 3 looks diferentes</li>
+                        <li><i class="fas fa-check text-primary mr-2"></i> 10 fotos editadas</li>
+                    </ul>
+                    <p class="font-bold text-xl">A partir de R$ 500</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full font-medium text-lg">Solicitar Orçamento</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-secondary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">Depoimentos</h2>
+                <p class="text-lg max-w-2xl mx-auto">O que meus clientes dizem sobre meu trabalho.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Cliente" 
+                             class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Mariana S.</h4>
+                            <p class="text-sm text-gray-600">Noiva</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Ana capturou nosso casamento de forma tão mágica! Cada foto conta uma história e revive as emoções daquele dia. Super profissional e atenciosa, recomendo demais!"</p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" 
+                             alt="Cliente" 
+                             class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Carlos R.</h4>
+                            <p class="text-sm text-gray-600">Pai de família</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Fizemos uma sessão em família e foi incrível como a Ana conseguiu capturar a essência de cada um de nós. As fotos ficaram lindas e naturais, exatamente como queríamos."</p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Cliente" 
+                             class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Luiza F.</h4>
+                            <p class="text-sm text-gray-600">Empreendedora</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Contratei a Ana para fotos profissionais para meu site e redes sociais. Ela entendeu exatamente o que eu precisava e as fotos superaram minhas expectativas. Meu branding melhorou muito!"</p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="py-20" id="contact">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-primary">Vamos Conversar</h2>
+                <p class="text-lg max-w-2xl mx-auto">Pronto para capturar seus momentos especiais? Entre em contato para agendar sua sessão ou tirar dúvidas.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nome</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label for="service" class="block text-gray-700 font-medium mb-2">Serviço de Interesse</label>
+                            <select id="service" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Selecione um serviço</option>
+                                <option value="wedding">Casamento</option>
+                                <option value="family">Família</option>
+                                <option value="portrait">Retratos</option>
+                                <option value="event">Eventos</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Mensagem</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full px-8 py-3 rounded-full font-medium text-lg">Enviar Mensagem</button>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-secondary rounded-lg p-8 h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">Informações de Contato</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mr-4 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Estúdio</h4>
+                                    <p>Rua das Flores, 123<br>Jardim Paulista<br>São Paulo - SP</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mr-4 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Email</h4>
+                                    <p>contato@lenslight.com.br</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mr-4 mt-1">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Telefone</h4>
+                                    <p>(11) 98765-4321</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="text-primary text-xl mr-4 mt-1">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Horário de Atendimento</h4>
+                                    <p>Segunda a Sexta: 9h às 18h<br>Sábado: 9h às 13h</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-bold mb-4 text-primary">Redes Sociais</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fab fa-pinterest-p"></i>
+                                </a>
+                                <a href="#" class="bg-white w-10 h-10 rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Assine Minha Newsletter</h2>
+            <p class="mb-8 max-w-2xl mx-auto">Receba dicas de fotografia, promoções exclusivas e novidades diretamente no seu email.</p>
+            
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Seu melhor email" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800">
+                <button type="submit" class="bg-accent px-6 py-3 rounded-r-lg font-medium">Assinar</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="text-primary">Lens</span> & Light
+                    </h3>
+                    <p class="mb-4">Fotografia profissional que conta histórias através de imagens.</p>
+                    <div class="flex space-x-4">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-primary transition-colors">Início</a></li>
+                        <li><a href="#about" class="hover:text-primary transition-colors">Sobre</a></li>
+                        <li><a href="#portfolio" class="hover:text-primary transition-colors">Portfólio</a></li>
+                        <li><a href="#services" class="hover:text-primary transition-colors">Serviços</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition-colors">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Serviços</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-primary transition-colors">Casamentos</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Famílias</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Retratos</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Eventos</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Moda</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contato</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 mt-1 text-primary"></i>
+                            <span>Rua das Flores, 123 - SP</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mr-2 mt-1 text-primary"></i>
+                            <span>(11) 98765-4321</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mr-2 mt-1 text-primary"></i>
+                            <span>contato@lenslight.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>&copy; 2023 Lens & Light. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Gallery modal (would need more implementation)
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // In a real implementation, this would open a modal with the full image
+                console.log('Opening gallery item');
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.querySelector('form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Obrigado pela sua mensagem! Entrarei em contato em breve.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>
